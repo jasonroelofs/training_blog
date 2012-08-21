@@ -9,4 +9,20 @@ describe Post do
     p.title.must_equal "Johnson"
     p.body.must_equal "Rockin"
   end
+
+  it "requires title for validation" do
+    p = Post.new :body => "Wha?!"
+    assert !p.valid?
+
+    p.title = "OH yeah"
+    assert p.valid?
+  end
+
+  it "requires body for validation" do
+    p = Post.new :title => "Wha?!"
+    assert !p.valid?
+
+    p.body = "OH yeah"
+    assert p.valid?
+  end
 end

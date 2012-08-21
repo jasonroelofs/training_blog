@@ -10,9 +10,11 @@ class PostsController < ApplicationController
     @post = Post.new params[:post]
     @post.blog = @blog
 
-    PostRepository.save @post
-
-    redirect_to blog_path(@blog)
+    if PostRepository.save @post
+      redirect_to blog_path(@blog)
+    else
+      render "new"
+    end
   end
 
 end

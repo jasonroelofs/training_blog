@@ -37,4 +37,12 @@ Feature: Show posts for a Blog
     And I should see "FRIST!"
     And I should see "This is such an honor"
 
+  Scenario: Post requires a title and body
+    When I follow "The Mysteries of Life"
+    And I follow "Add a Post"
+    And I press "Create Post"
+
+    Then I should see "Title can't be blank"
+    And I should see "Body can't be blank"
+
   Scenario: Blogs have their own posts

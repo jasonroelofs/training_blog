@@ -27,5 +27,13 @@ describe PostsController do
       posts[0].title.must_equal "Something Cool"
       posts[0].body.must_equal "Something Bad"
     end
+
+    it "does not save the post on error" do
+      post :create, :blog_id => @blog.id,
+        :post => {:title => "", :body => ""}
+
+      posts = PostRepository.find_all_in_blog(@blog)
+      posts.length.must_equal 0
+    end
   end
 end
