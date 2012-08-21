@@ -46,3 +46,19 @@ Feature: Show posts for a Blog
     And I should see "Body can't be blank"
 
   Scenario: Blogs have their own posts
+    Given there are the following blogs:
+      | title           |
+      | Nothing Special |
+    And the blog "The Mysteries of Life" has the following posts
+      | title         | body                                    |
+      | Frist Post!   | I am so cool because I got here first!  |
+      | BRILLANT      | I am the bestest coder EVAR             |
+    And the blog "Nothing Special" has the following posts
+      | title         | body                |
+      | Boring post   | Nothing to see here |
+
+    When I visit /
+    When I follow "Nothing Special"
+    Then I should see "Boring post"
+    And I should not see "Frist Post!"
+    And I should not see "BRILLANT"
