@@ -5,7 +5,7 @@ class Blog
 
   attr_accessor :id, :title
 
-  def initialize(title)
+  def initialize(title = nil)
     @title = title
   end
 

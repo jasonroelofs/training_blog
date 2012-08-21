@@ -6,6 +6,11 @@ describe Blog do
     blog.title.must_equal "title"
   end
 
+  it "can be given no title" do
+    blog = Blog.new
+    blog.title.must_be_nil
+  end
+
   it "has an id" do
     blog = Blog.new "title"
     blog.id.must_be_nil

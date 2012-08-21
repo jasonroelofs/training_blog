@@ -21,7 +21,33 @@ describe BlogsController do
   describe "#show" do
     it "finds the selected blog and shows it" do
       get :show, :id => @blog1.id
+
       assigns(:blog).must_equal @blog1
     end
   end
+
+  describe "#new" do
+    it "renders the new blog form" do
+      get :new
+
+      assigns(:blog).wont_be_nil
+    end
+  end
+
+  describe "#create" do
+    it "build and saves a new blog" do
+      post :create, :blog => {:title => "Minecraft Tips"}
+
+      new_blog = BlogRepository.all.find {|b| b.title == "Minecraft Tips"}
+      new_blog.wont_be_nil
+    end
+  end
 end
+
+
+#    it "re-renders form if save failed" do
+#      post :create, :blog => {:title => "Minecraft Tips"}
+#
+#      new_blog = BlogRepository.all.find {|b| b.title == "Minecraft Tips"}
+#      new_blog.wont_be_nil
+#    end
