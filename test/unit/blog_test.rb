@@ -11,6 +11,17 @@ describe Blog do
     blog.title.must_be_nil
   end
 
+  it "requires a title to be valid" do
+    blog = Blog.new
+    assert !blog.valid?
+
+    blog.title = ""
+    assert !blog.valid?
+
+    blog.title = "A new title!"
+    assert blog.valid?
+  end
+
   it "has an id" do
     blog = Blog.new "title"
     blog.id.must_be_nil

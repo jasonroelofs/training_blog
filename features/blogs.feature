@@ -30,3 +30,8 @@ Feature: Display list of Blogs
     Then I should see "This is a blog title"
     And I should see "This blog has"
 
+  Scenario: Blog requires a title
+    When I visit /
+    And I follow "New Blog"
+    And I press "Create Blog"
+    Then I should see "Title can't be blank"

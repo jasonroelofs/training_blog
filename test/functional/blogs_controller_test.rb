@@ -41,13 +41,13 @@ describe BlogsController do
       new_blog = BlogRepository.all.find {|b| b.title == "Minecraft Tips"}
       new_blog.wont_be_nil
     end
+
+    it "doesn't create the blog if no title given" do
+      post :create, :blog => {:title => ""}
+
+      new_blog = BlogRepository.all.find {|b| b.title == ""}
+      new_blog.must_be_nil
+    end
   end
 end
 
-
-#    it "re-renders form if save failed" do
-#      post :create, :blog => {:title => "Minecraft Tips"}
-#
-#      new_blog = BlogRepository.all.find {|b| b.title == "Minecraft Tips"}
-#      new_blog.wont_be_nil
-#    end

@@ -5,6 +5,8 @@ class Blog
 
   attr_accessor :id, :title
 
+  validates_presence_of :title
+
   def initialize(title = nil)
     @title = title
   end

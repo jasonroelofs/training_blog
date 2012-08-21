@@ -19,8 +19,13 @@ module InMemory
     end
 
     def save(blog)
-      blog.id ||= (@id_counter += 1)
-      @blogs << blog
+      if blog.valid?
+        blog.id ||= (@id_counter += 1)
+        @blogs << blog
+        true
+      else
+        false
+      end
     end
 
   end
