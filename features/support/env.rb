@@ -28,3 +28,9 @@ Capybara.default_selector = :css
 # recommended as it will mask a lot of errors for you!
 #
 ActionController::Base.allow_rescue = false
+
+Before do
+  Kernel.silence_warnings do
+    BlogRepository = InMemory::BlogRepo.new
+  end
+end

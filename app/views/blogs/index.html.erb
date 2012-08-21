@@ -1,0 +1,7 @@
+<h1>Available Blogs</h1>
+
+<% @blogs.each do |blog| %>
+  <div class="blog">
+    <%= link_to blog.title, blog_path(blog) %>
+  </div>
+<% end %>
