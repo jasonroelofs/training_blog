@@ -4,9 +4,17 @@
 
 <% @posts.each do |post| %>
   <div class="post">
+    <hr/>
     <h4><%= post.title %></h4>
     <p>
       <%= post.body %>
     </p>
+    <hr/>
   </div>
 <% end %>
+
+<hr/>
+
+<div class="actions">
+  <%= link_to "Add a Post", [:new, @blog, :post] %>
+</div>

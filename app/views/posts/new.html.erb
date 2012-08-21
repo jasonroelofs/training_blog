@@ -1,0 +1,19 @@
+<h1>Add a New Post</h1>
+
+<ul>
+  <% @post.errors.full_messages.each do |msg| %>
+    <li><%= msg %></li>
+  <%- end %>
+</ul>
+
+<%= form_for [@blog, @post] do |f| %>
+  <%= f.label :title %>
+  <%= f.text_field :title %>
+  <br/>
+
+  <%= f.label :body %>
+  <%= f.text_area :body %>
+
+  <br/>
+  <%= f.submit "Create Post" %>
+<% end %>

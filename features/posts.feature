@@ -25,7 +25,16 @@ Feature: Show posts for a Blog
     And I should see "I am the bestest coder EVAR"
 
   Scenario: Can add a post to a blog
+    When I follow "The Mysteries of Life"
+    And I follow "Add a Post"
 
-  Scenario: Posts are ordered by created date, descending
+    Then I should see "Add a New Post"
+    When I fill in "FRIST!" for "Title"
+    And I fill in "This is such an honor" for "Body"
+    And I press "Create Post"
+
+    Then I should see "This blog has 1 post"
+    And I should see "FRIST!"
+    And I should see "This is such an honor"
 
   Scenario: Blogs have their own posts
