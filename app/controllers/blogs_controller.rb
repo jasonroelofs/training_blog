@@ -13,7 +13,7 @@ class BlogsController < ApplicationController
   end
 
   def create
-    @blog = Blog.new params[:blog][:title]
+    @blog = Blog.new params[:blog]
 
     if BlogRepository.save @blog
       redirect_to blogs_path

@@ -1,18 +1,8 @@
 class Blog
-  extend  ActiveModel::Naming
-  include ActiveModel::Validations
-  include ActiveModel::Conversion
+  include Entity
 
-  attr_accessor :id, :title
+  attr_accessor :title
 
   validates_presence_of :title
-
-  def initialize(title = nil)
-    @title = title
-  end
-
-  def persisted?
-    !!self.id
-  end
 
 end

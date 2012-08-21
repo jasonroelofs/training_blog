@@ -2,7 +2,7 @@ require 'test_helper'
 
 describe Blog do
   it "takes a title in constructor" do
-    blog = Blog.new "title"
+    blog = Blog.new :title => "title"
     blog.title.must_equal "title"
   end
 
@@ -23,7 +23,7 @@ describe Blog do
   end
 
   it "has an id" do
-    blog = Blog.new "title"
+    blog = Blog.new :title => "title"
     blog.id.must_be_nil
 
     blog.id = 10

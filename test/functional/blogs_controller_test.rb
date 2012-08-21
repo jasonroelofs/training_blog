@@ -3,8 +3,8 @@ require 'test_helper'
 describe BlogsController do
 
   before do
-    @blog1 = Blog.new "Blog of Johnson"
-    @blog2 = Blog.new "Eating Pie"
+    @blog1 = Blog.new :title => "Blog of Johnson"
+    @blog2 = Blog.new :title => "Eating Pie"
 
     BlogRepository.save @blog1
     BlogRepository.save @blog2
