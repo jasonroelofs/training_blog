@@ -5,3 +5,12 @@
 require File.expand_path('../config/application', __FILE__)
 
 TrainingBlog::Application.load_tasks
+
+task :default => "test:all"
+
+namespace :test do
+  desc "Run the cucumber features"
+  Cucumber::Rake::Task.new(:features) do |t|
+    t.cucumber_opts = "features --format progress"
+  end
+end
