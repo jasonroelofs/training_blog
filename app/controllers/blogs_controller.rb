@@ -5,7 +5,8 @@ class BlogsController < ApplicationController
   end
 
   def show
-    @blog = BlogRepository.find params[:id].to_i
+    @blog = BlogRepository.find params[:id]
+    @posts = PostRepository.find_all_in_blog @blog
   end
 
   def new

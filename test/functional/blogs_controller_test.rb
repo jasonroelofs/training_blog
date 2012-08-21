@@ -23,6 +23,24 @@ describe BlogsController do
       get :show, :id => @blog1.id
 
       assigns(:blog).must_equal @blog1
+      assigns(:posts).must_equal []
+    end
+
+    it "finds the blog's posts and puts them up too" do
+      post1 = Post.new :blog => @blog1,
+        :title => "This is a new cool Post",
+        :body => "OMG I am SO COOL"
+
+      post2 = Post.new :blog => @blog2,
+        :title => "This is a new cool Post",
+        :body => "OMG I am SO COOL"
+
+      PostRepository.save post1
+      PostRepository.save post2
+
+      get :show, :id => @blog1.id
+
+      assigns(:posts).must_equal [post1]
     end
   end
 

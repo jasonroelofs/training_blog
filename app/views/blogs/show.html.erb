@@ -1,5 +1,12 @@
 <h1><%= @blog.title %></h1>
 
-<h3>This blog has # posts in it</h3>
+<h3>This blog has <%= @posts.size %> posts in it</h3>
 
-Posts!
+<% @posts.each do |post| %>
+  <div class="post">
+    <h4><%= post.title %></h4>
+    <p>
+      <%= post.body %>
+    </p>
+  </div>
+<% end %>
