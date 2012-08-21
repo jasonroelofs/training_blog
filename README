@@ -3,6 +3,29 @@
 This is a quick blog in Rails thrown together to show off the benefits of
 abstracting out your persistence layer.
 
+This is a very quick app to show some of the concepts I lined out in my blog
+"Abstract Persistence Logic" here: http://jasonroelofs.com/2012/07/13/abstract_persistence_logic/
+
 The code found in here is shown in [these slides] from BarCampGR 2012 [link].
 
 
+2. So what am I looking at?
+
+This is a simple Rails app that does one thing very differently: it completely
+separates model logic from persistence handling. You'll see in BlogsController
+and PostsController BlogRepository and PostRepository objects. These repository
+objects are pointers to the actual repository implementations in use (defined in
+config/initializers/repository_mapping.rb).
+
+You can find the current repository implementations in app/repositories. The currently
+implemented repositories are:
+
+  1) InMemory: Everything is kept in memory. This is used by the tests
+
+
+3. [to do yet] Other implementations
+
+If you look at the [branch name] branch you'll see the repository object usage moved
+into the domain models themselves, leaving the Rails controllers looking a lot like
+you're used to, but under the hood we still have the swappable persistence layer
+from the master branch.
