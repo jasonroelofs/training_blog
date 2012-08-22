@@ -2,6 +2,9 @@ case ENV["REPOSITORY"]
 when "active_record"
   BlogRepository = ActiveRecordRepos::BlogRepo.new
   PostRepository = ActiveRecordRepos::PostRepo.new
+when "yaml"
+  BlogRepository = YamlRepos::BlogRepo.new
+  PostRepository = YamlRepos::PostRepo.new
 else
   BlogRepository = InMemory::BlogRepo.new
   PostRepository = InMemory::PostRepo.new

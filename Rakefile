@@ -21,4 +21,9 @@ namespace :test do
   Cucumber::Rake::Task.new(:features_ar) do |t|
     t.cucumber_opts = "features --format progress REPOSITORY=active_record"
   end
+
+  desc "Run cucumber features under YAML persistence"
+  Cucumber::Rake::Task.new(:features_ar) do |t|
+    t.cucumber_opts = "features --format progress REPOSITORY=yaml"
+  end
 end
