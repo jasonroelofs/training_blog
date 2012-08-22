@@ -1,12 +1,12 @@
 class BlogsController < ApplicationController
 
   def index
-    @blogs = BlogRepository.all
+    @blogs = Blog.all
   end
 
   def show
-    @blog = BlogRepository.find params[:id]
-    @posts = PostRepository.find_all_in_blog @blog
+    @blog = Blog.find params[:id]
+    @posts = @blog.posts
   end
 
   def new
@@ -16,7 +16,7 @@ class BlogsController < ApplicationController
   def create
     @blog = Blog.new params[:blog]
 
-    if BlogRepository.save @blog
+    if @blog.save
       redirect_to blogs_path
     else
       render "new"
