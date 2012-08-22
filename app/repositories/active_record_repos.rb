@@ -2,7 +2,7 @@ module ActiveRecordRepos
 
   class Blog < ActiveRecord::Base
 
-    def self.from_model(blog)
+    def self.from_domain(blog)
       where(:id => blog.id).first_or_initialize.tap do |obj|
         obj.title = blog.title
       end
@@ -13,87 +13,105 @@ module ActiveRecordRepos
   class Post < ActiveRecord::Base
     belongs_to :blog
 
-    def self.from_model(post)
+    def self.from_domain(post)
       where(:id => post.id).first_or_initialize.tap do |obj|
         obj.title = post.title
         obj.body = post.body
-        obj.blog = Blog.from_model(post.blog)
+        obj.blog = Blog.from_domain(post.blog)
       end
     end
 
   end
 
-  class BlogRepo
+  class ArRepo
 
-    def save(blog)
-      return false unless blog.valid?
+    attr_reader :ar_model_class
+    attr_reader :domain_model_class
 
-      ar_blog = Blog.from_model(blog)
-      ar_blog.save
+    def initialize(ar_model_class, domain_model_class)
+      @ar_model_class = ar_model_class
+      @domain_model_class = domain_model_class
+    end
+
+    ##
+    # Persist the domain object. This object must be an
+    # ActiveModel and it must have Validations on it. If the
+    # model is valid it will be saved, otherwise it won't.
+    #
+    # Returns true / false accordingly
+    ##
+    def save(domain_object)
+      return false unless domain_object.valid?
+
+      @ar_model_class.from_domain(domain_object).save
       true
     end
 
+    ##
+    # Find the model with the given id.
+    # Will return an instance of the appropriate domain_model_class
+    ##
     def find(id)
-      convert_to_model Blog.find(id)
+      convert_to_domain_object @ar_model_class.find(id)
+    end
+
+    ##
+    # Return all known rows of this model.
+    # Will return instances of the appropriate domain_model_class
+    ##
+    def all
+      convert_all_to_domain_object @ar_model_class.all
+    end
+
+    ##
+    # Clear out all known rows of this model.
+    ##
+    def reset!
+      @ar_model_class.destroy_all
+    end
+
+    protected
+
+    def convert_all_to_domain_object(ar_objects)
+      ar_objects.map do |ar_object|
+        convert_to_domain_object ar_object
+      end
+    end
+
+    def convert_to_domain_object(ar_object)
+      raise "Must implement how to convert from AR to Domain models"
+    end
+
+  end
+
+  class BlogRepo < ArRepo
+
+    def initialize
+      super(Blog, ::Blog)
     end
 
     def find_by_title(title)
-      convert_to_model Blog.where(:title => title).first
+      convert_to_domain_object @ar_model_class.where(:title => title).first
     end
 
-    def all
-      convert_all_to_model Blog.all
-    end
-
-    def reset!
-      Blog.destroy_all
-    end
-
-    def convert_all_to_model(ar_blogs)
-      ar_blogs.map do |ar_blog|
-        convert_to_model ar_blog
-      end
-    end
-
-    def convert_to_model(ar_blog)
-      ::Blog.new :id => ar_blog.id, :title => ar_blog.title
+    def convert_to_domain_object(ar_blog)
+      domain_model_class.new :id => ar_blog.id, :title => ar_blog.title
     end
   end
 
-  class PostRepo
+  class PostRepo < ArRepo
 
-    def save(post)
-      return false unless post.valid?
-
-      ar_post = Post.from_model(post)
-      ar_post.save
-      true
-    end
-
-    def find(id)
-      convert_to_model Post.find(id)
+    def initialize
+      super(Post, ::Post)
     end
 
     def find_all_in_blog(blog)
-      convert_all_to_model Post.where(:blog_id => blog.id).all
+      convert_all_to_domain_object @ar_model_class.where(:blog_id => blog.id).all
     end
 
-    def all
-      convert_all_to_model Post.all
-    end
-
-    def reset!
-      Post.destroy_all
-    end
-
-    def convert_all_to_model(ar_posts)
-      ar_posts.map do |ar_post|
-        convert_to_model ar_post
-      end
-    end
-
-    def convert_to_model(ar_post)
-      ::Post.new :id => ar_post.id, :title => ar_post.title,
+    def convert_to_domain_object(ar_post)
+      domain_model_class.new :id => ar_post.id,
+        :title => ar_post.title,
         :body => ar_post.body,
         :blog => ar_post.blog
     end
