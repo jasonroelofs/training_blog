@@ -35,9 +35,14 @@ REPOSITORY=yaml for YAML serialization
 Anything else, or leaving REPOSITORY alone will default to InMemory.
 
 
-3. [to do yet] Other implementations
+3. Other implementation paradigms
 
-If you look at the [branch name] branch you'll see the repository object usage moved
+If you look at the hidden_persistence branch you'll see the repository object usage moved
 into the domain models themselves, leaving the Rails controllers looking a lot like
 you're used to, but under the hood we still have the swappable persistence layer
-from the master branch.
+from the master branch. No changes were required in the tests and they all passed.
+
+Once you have a nice abstraction layer for your persistence, where it lives and how the
+underneath is implemented is immaterial to your app.
+
+SRP is awesome. Objects should have one and only one reason to change.
