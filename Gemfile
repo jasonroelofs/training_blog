@@ -7,6 +7,7 @@ gem 'sqlite3'
 group :test do
   gem "minitest"
   gem "minitest-spec-rails"
+  gem "debugger"
 end
 
 group :cucumber do
