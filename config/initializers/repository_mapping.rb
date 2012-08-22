@@ -1,5 +1,11 @@
-BlogRepository = InMemory::BlogRepo.new
-PostRepository = InMemory::PostRepo.new
+case ENV["REPOSITORY"]
+when "active_record"
+  BlogRepository = ActiveRecordRepos::BlogRepo.new
+  PostRepository = ActiveRecordRepos::PostRepo.new
+else
+  BlogRepository = InMemory::BlogRepo.new
+  PostRepository = InMemory::PostRepo.new
+end
 
 if Rails.env.development?
   BlogRepository.save Blog.new(:title => "My Test Blog")

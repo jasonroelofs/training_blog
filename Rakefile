@@ -10,10 +10,15 @@ TrainingBlog::Application.load_tasks
 task :default => "test:all"
 
 namespace :test do
-  task :all => ["test:units", "test:functionals", "test:features"]
+  task :all => ["test:units", "test:functionals", "test:features", "test:features_ar"]
 
   desc "Run the cucumber features"
   Cucumber::Rake::Task.new(:features) do |t|
     t.cucumber_opts = "features --format progress"
+  end
+
+  desc "Run cucumber features under ActiveRecord"
+  Cucumber::Rake::Task.new(:features_ar) do |t|
+    t.cucumber_opts = "features --format progress REPOSITORY=active_record"
   end
 end
