@@ -22,6 +22,18 @@ implemented repositories are:
 
   1) InMemory: Everything is kept in memory. This is used by the tests
 
+  2) ActiveRecordRepos: Full ActiveRecord implementation, currently backed by sqlite3
+
+  3) YamlRepos: InMemory variant where all changes are persisted into YAML files under db/yaml
+
+You can run the app under any of these using the REPOSITORY environment variable:
+
+REPOSITORY=active_record for ActiveRecord
+
+REPOSITORY=yaml for YAML serialization
+
+Anything else, or leaving REPOSITORY alone will default to InMemory.
+
 
 3. [to do yet] Other implementations
 
